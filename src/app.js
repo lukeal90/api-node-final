@@ -7,15 +7,18 @@ const path = require('path');
 const logger = require('./helpers/logger');
 const Router = require('./routes');
 const packageJson = require('../package.json');
+const InstanceManagementService = require('./helpers/dbManagement/InstanceManagementService');
 
 const {
     BODY_LIMIT,
     NODE_ENV,
-    PORT
+    PORT,
+    DB
 } = process.env;
 
 class App {
     constructor() {
+        this.dbManagement = new InstanceManagementService().build(DB);
         this.app = express();
     }
 

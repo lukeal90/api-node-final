@@ -1,33 +1,22 @@
-const { ProductService } = require('../services');
 const { BAD_REQUEST } = require('../helpers/error')
 const _ = require('lodash');
+const { ProductService } = require('../services');
 
 class ProductController {
 
     static async getAll(req, res) {
         try {
-            let productos = await ProductService.getAll();
-            return productos;
+            let response = await ProductService.getAll();
+            res.send(response);
         } catch (error) {
             return [];
         }
     }
 
-    static async productRandom(req, res) {
-        try {
-            let productos = await ProductService.getAll();
-
-            if (productos.length == 0) {
-                return res.status(403).send({"msg" : "No hay productos"});
-            }  
-            
-            const random = Math.floor(Math.random()*productos.length);
-            res.send(productos[random]);              
-        } catch (error) {
-            console.log("Algo salio mal al obtener un producto random : " + error.message);
-        }
-    }    
-
+    static async prueba(req, res) {
+        console.log("entro")
+        ProductService.getAll();
+    }
     static async getByIdOrAll(req, res) {
         try {
             let response;
@@ -44,11 +33,12 @@ class ProductController {
         }
     }
 
-    static async addProduct(data) {
+    static async addProduct(req, res) {
         try {
-            let response = await ProductService.addProduct(data);
+            let response = await ProductService.addProduct(req.body);
+            res.send(response);
         } catch (error) {
-            console.log("Algo salio mal al obtener los productos : " + error.message);
+            console.log("Algo salio mal al agregar los productos : " + error.message);
         }
     }
     

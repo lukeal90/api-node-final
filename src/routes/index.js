@@ -11,8 +11,8 @@ class Routes {
         Logger.info('Loading api...');
         app.use('/api', require('./api')(Router()));
         app.use(errorHandler);
-        app.get('/', (_, res) => Errors.send404(res));
-        app.use('*', (_, res) => Errors.sendError(res));        
+        //app.get('/', (_, res) => Errors.send404(res));
+        //app.use('*', (_, res) => Errors.sendError(res));        
     }
 }
 

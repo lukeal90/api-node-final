@@ -1,11 +1,11 @@
 const { ProductController } = require('../../controllers');
-const { validateAdmin } = require('../middleWares');
+//const { validateAdmin } = require('../middleWares');
 
 module.exports = router => {
-    router.get('/:id?', validateAdmin, ProductController.getByIdOrAll);
-    router.post('/', validateAdmin, ProductController.addProduct);
-    router.put('/:id', validateAdmin, ProductController.updateProduct);
-    router.delete('/:id', validateAdmin, ProductController.deleteProduct);
-    router.get('/productRandom', ProductController.productRandom);
+    router.get('/:id?', ProductController.getByIdOrAll);
+    router.post('/', ProductController.addProduct);
+    router.put('/:id', ProductController.updateProduct);
+    router.delete('/:id', ProductController.deleteProduct);
+    router.get('/prueba/:id', ProductController.prueba);
     return router;
 };
