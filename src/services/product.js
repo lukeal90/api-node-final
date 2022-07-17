@@ -1,6 +1,6 @@
-const {Types: {ObjectId}} = require('mongoose');
 let { DaoProduct } = app.dbManagement;
 DaoProduct = new DaoProduct();
+const {Types: {ObjectId}} = require('mongoose');
 
 class ProductService {
 
@@ -13,11 +13,12 @@ class ProductService {
     }    
 
     static async addProduct(product) {
-        return await DaoProduct.addProduct(product);
+        const id = ObjectId();
+        return await DaoProduct.saveOne({ _id: id } , {id,...product});
     }    
     
-    static async updateProduct(producto, id) {
-        return await DaoProduct.update(product);
+    static async updateProduct(product, _id) {
+        return await DaoProduct.saveOne({_id},product);
     }   
 
     static async deleteProduct(id) {

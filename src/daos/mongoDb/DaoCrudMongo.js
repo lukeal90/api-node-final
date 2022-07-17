@@ -9,7 +9,7 @@ class DaoCrudMongo{
         return await this.model.find();
     }
 
-    static async getById(id) {
+    async getById(id) {
         return await this.model.findById(id);
     }    
 
@@ -21,8 +21,13 @@ class DaoCrudMongo{
                 .exec();
     }    
     
-    static async delete(id) {
-        
+    async updateById(id, object){
+        const response = await this.model.findOneAndUpdate({ _id: id },object);
+        return response;
+    }
+
+    async delete(id) {
+        return this.model.deleteOne({id});
     }        
 }
 

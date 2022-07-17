@@ -6,5 +6,6 @@ module.exports = router => {
     router.get('/:id/products', ShoppingCartController.getAllProducts);
     router.post('/:id/products', ShoppingCartController.addProducts);
     router.post('/:id/products/:idProduct', ShoppingCartController.deleteProduct);
+    router.get('/:id', ShoppingCartController.getById);
     return router;
 };

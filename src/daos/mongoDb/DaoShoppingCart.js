@@ -1,23 +1,48 @@
-const ProductSchema = require('../../models/product');
+const ShoppingCartSchema = require('../../models/shoppingCart');
+const DaoCrudMongo = require('./DaoCrudMongo');
+const _ = require('lodash');
+let DaoProduct = require('./DaoProduct')
+DaoProduct = new DaoProduct();
+class DaoShoppingCart extends DaoCrudMongo{
 
-class DaoShoppingCart{
-
-    static async getAll() {
-        console.log("LALa funciono")
+    constructor(){
+        super(ShoppingCartSchema);
     }
 
-    static async getById(id) {
-    }    
+    async getAllProducts(id){
+        const cart = this.getById(id);
+        return cart.products;
+    }
 
-    static async addProduct(product) {
+    async addProducts(idCart, products){
+        let cart = await this.getById(idCart);
+
+        for(const p of products){
+            let product = await DaoProduct.getById(p);
+            console.log(product);
+            cart.products.push(product);
+        }
+        console.log(cart)
+        await this.updateById(idCart ,cart);    
+        return "Se agregaron correctamente los pruductos";          
+    } 
+
+    async addProduct(product) {
         console.log({_id : new ObjectId(), ...product})
         ProductSchema.create({...product});
     }    
     
-    static async updateProduct(producto, id) {
-    }   
-
-    static async deleteProduct(id) {
+    async deleteProduct(idCart, idProduct) {
+        const cart = this.getById(idCart);
+        
+        if(!_.isNil(cart)){
+            if(cart.products.some(p => p.id == idProduct)){
+                const newProducts = cart.products.filter(p => p.id != idProduct);
+                cart.products = newProducts;
+                return this.saveOne({ _id: idCart }, {...cart});
+            }
+        }
+        return null;
     }      
 
 }
