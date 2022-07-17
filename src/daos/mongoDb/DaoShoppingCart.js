@@ -26,11 +26,6 @@ class DaoShoppingCart extends DaoCrudMongo{
         await this.updateById(idCart ,cart);    
         return "Se agregaron correctamente los pruductos";          
     } 
-
-    async addProduct(product) {
-        console.log({_id : new ObjectId(), ...product})
-        ProductSchema.create({...product});
-    }    
     
     async deleteProduct(idCart, idProduct) {
         const cart = this.getById(idCart);
