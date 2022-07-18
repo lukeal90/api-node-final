@@ -27,7 +27,7 @@ class DaoCrudMongo{
     }
 
     async delete(id) {
-        return this.model.deleteOne({id});
+        return this.model.findOneAndDelete({ _id: id });
     }        
 }
 

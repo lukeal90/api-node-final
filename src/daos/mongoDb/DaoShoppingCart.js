@@ -10,7 +10,7 @@ class DaoShoppingCart extends DaoCrudMongo{
     }
 
     async getAllProducts(id){
-        const cart = this.getById(id);
+        const cart = await this.getById(id);
         return cart.products;
     }
 
@@ -19,22 +19,21 @@ class DaoShoppingCart extends DaoCrudMongo{
 
         for(const p of products){
             let product = await DaoProduct.getById(p);
-            console.log(product);
             cart.products.push(product);
         }
-        console.log(cart)
+
         await this.updateById(idCart ,cart);    
         return "Se agregaron correctamente los pruductos";          
     } 
     
     async deleteProduct(idCart, idProduct) {
-        const cart = this.getById(idCart);
+        let cart = await this.getById(idCart);
         
         if(!_.isNil(cart)){
-            if(cart.products.some(p => p.id == idProduct)){
-                const newProducts = cart.products.filter(p => p.id != idProduct);
+            if(cart.products.some(p => p._id == idProduct)){
+                const newProducts = cart.products.filter(p => p._id != idProduct);
                 cart.products = newProducts;
-                return this.saveOne({ _id: idCart }, {...cart});
+                return this.updateById(idCart, cart);
             }
         }
         return null;

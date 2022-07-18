@@ -21,11 +21,11 @@ class ShoppingCartService {
     }  
     
     static async getAllProducts(id){
-
+        return await DaoShoppingCart.getAllProducts(id);
     }    
 
     static async deleteProduct(idCart, idProduct){
-
+        return await DaoShoppingCart.deleteProduct(idCart, idProduct);
     }     
     
     static async addProducts(idCart, products){

@@ -5,7 +5,7 @@ module.exports = router => {
     router.delete('/:id', ShoppingCartController.deleteCart);
     router.get('/:id/products', ShoppingCartController.getAllProducts);
     router.post('/:id/products', ShoppingCartController.addProducts);
-    router.post('/:id/products/:idProduct', ShoppingCartController.deleteProduct);
+    router.delete('/:id/products/:idProduct', ShoppingCartController.deleteProduct);
     router.get('/:id', ShoppingCartController.getById);
     return router;
 };
